@@ -20,6 +20,7 @@ package types
 import (
 	"encoding/binary"
 	"fmt"
+	"github.com/ethereum/go-ethereum/merkle"
 	"io"
 	"math/big"
 	"reflect"
@@ -99,7 +100,7 @@ type headerMarshaling struct {
 // Hash returns the block hash of the header, which is simply the keccak256 hash of its
 // RLP encoding.
 func (h *Header) Hash() common.Hash {
-	return rlpHash(h)
+	return merkle.Mmr.Hash(h)
 }
 
 var headerSize = common.StorageSize(reflect.TypeOf(Header{}).Size())
